@@ -1,14 +1,30 @@
 /* eslint-disable react/prop-types */
-
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import UseProductos from "../hook/UseProductos"
 import { eliminarProducto } from "../redux/slices/productoSlice"
+import { useNavigate } from "react-router-dom"
 
 const ResultadosData = ({ producto }) => {
 
     const dispacth = useDispatch()
+    const navigate = useNavigate()
+
+    const productos = useSelector(state => state.producto.productosArray)
+
+    const { setEditarProducto, setNombre, setPrecio } = UseProductos()
 
     const handleEliminar = id => {
         dispacth(eliminarProducto(id))
+    }
+
+    const handleEditar = id => {
+        const productoEditado = productos.find((producto) => producto.id === id)
+
+        setEditarProducto(id)
+        setNombre(productoEditado.nombre)
+        setPrecio(productoEditado.precio)
+
+        navigate(`/productos/${id}`)
     }
 
     return (
@@ -28,6 +44,7 @@ const ResultadosData = ({ producto }) => {
 
                     <button 
                         className="bg-teal-600 text-white py-2 px-5 rounded-md"
+                        onClick={() => handleEditar(producto.id)}
                     >Editar</button>
                 </td>
             </tr>

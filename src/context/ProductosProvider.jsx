@@ -8,6 +8,7 @@ const ProductosProvider = ({ children }) => {
   //estados
   const [ nombre, setNombre ] = useState("")
   const [ precio, setPrecio ] = useState("")
+  const [ editarProducto, setEditarProducto ] = useState(null)
 
 
   return (
@@ -15,6 +16,7 @@ const ProductosProvider = ({ children }) => {
       value={{
         nombre, setNombre,
         precio, setPrecio,
+        editarProducto, setEditarProducto
       }}
     >
         { children }

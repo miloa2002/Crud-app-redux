@@ -1,10 +1,10 @@
 import { useDispatch } from "react-redux"
-import { agregarProducto } from "../redux/slices/productoSlice"
+import { actualizarProducto, agregarProducto } from "../redux/slices/productoSlice"
 import UseProductos from "../hook/UseProductos"
 
 const Formulario = () => {
 
-    const { nombre, setNombre, precio, setPrecio } = UseProductos()
+    const { nombre, setNombre, precio, setPrecio, editarProducto, setEditarProducto } = UseProductos()
 
     const dipatch = useDispatch()
     const id = Math.random().toString().slice(2, 8);
@@ -12,12 +12,24 @@ const Formulario = () => {
     const handleSubmit = e => {
         e.preventDefault();
 
-        const producto = {
-            id,
-            nombre,
-            precio
+        if(editarProducto !== null){
+            const edicionProducto = {
+                id: editarProducto,
+                nombre,
+                precio
+            }
+
+            dipatch(actualizarProducto(edicionProducto))
+            setEditarProducto(null)
+        }else{
+            const producto = {
+                id,
+                nombre,
+                precio
+            }
+            dipatch(agregarProducto(producto))
         }
-        dipatch(agregarProducto(producto))
+
 
         setNombre("")
         setPrecio("")
