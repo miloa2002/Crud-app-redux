@@ -1,16 +1,26 @@
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import { actualizarProducto, agregarProducto } from "../redux/slices/productoSlice"
 import UseProductos from "../hook/UseProductos"
 
+
 const Formulario = () => {
 
     const { nombre, setNombre, precio, setPrecio, editarProducto, setEditarProducto } = UseProductos()
+    const [error, setError] = useState("")
 
     const dipatch = useDispatch()
+    const navigate = useNavigate()
     const id = Math.random().toString().slice(2, 8);
     
     const handleSubmit = e => {
         e.preventDefault();
+
+        if([nombre, precio].includes("")){
+            setError("Todos los campos son obligatorios")
+            return;
+        }
 
         if(editarProducto !== null){
             const edicionProducto = {
@@ -28,6 +38,7 @@ const Formulario = () => {
                 precio
             }
             dipatch(agregarProducto(producto))
+            navigate("/")
         }
 
 
@@ -37,6 +48,7 @@ const Formulario = () => {
 
     return (
         <>
+        {error && <p className="font-bold text-center bg-red-600 p-3 rounded-md text-white mb-6">{error}</p>}
             <form
                 onSubmit={handleSubmit}
             >
@@ -62,7 +74,7 @@ const Formulario = () => {
                         onChange={e => setPrecio(e.target.value)}
                     />
                 </div>
-                <input type="submit" value="Crear producto" className="text-white bg-teal-600 hover:bg-teal-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-teal-600 dark:hover:bg-teal-700 dark:focus:bg-teal-800 cursor-pointer" />
+                <input type="submit" value={editarProducto ? "Edita el producto" : "Crea un producto"} className="text-white bg-teal-600 hover:bg-teal-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-teal-600 dark:hover:bg-teal-700 dark:focus:bg-teal-800 cursor-pointer" />
             </form>
 
         </>
