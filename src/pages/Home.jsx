@@ -16,7 +16,7 @@ const Home = () => {
 
   return (
     <div className="container">
-      <ListaProductos />
+      <ListaProductos productosData={productosData} />
     </div>
   )
 }

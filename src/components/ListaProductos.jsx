@@ -1,7 +1,7 @@
 import ResultadosData from "./ResultadosData"
 
-const ListaProductos = () => {
-
+// eslint-disable-next-line react/prop-types
+const ListaProductos = ({ productosData }) => {
     return (
         <>
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -20,7 +20,12 @@ const ListaProductos = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <ResultadosData />
+                        {
+                            // eslint-disable-next-line react/prop-types
+                            productosData.map((producto) => (
+                                <ResultadosData producto={producto} key={producto.id} />
+                            ))
+                        }
                     </tbody>
                 </table>
             </div>
