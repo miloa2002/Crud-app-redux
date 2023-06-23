@@ -14,10 +14,14 @@ export const productoSlice = createSlice({
 
         obtenerProducto: (state, action) => {
             state.productosArray = action.payload
+        },
+
+        eliminarProducto: (state, action) => {
+            state.productosArray = state.productosArray.filter(producto => producto.id !== action.payload)
         }
     }
 })
 
-export const { agregarProducto, obtenerProducto } = productoSlice.actions;
+export const { agregarProducto, obtenerProducto, eliminarProducto } = productoSlice.actions;
 
 export default productoSlice.reducer
