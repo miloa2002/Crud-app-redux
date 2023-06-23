@@ -10,10 +10,14 @@ export const productoSlice = createSlice({
     reducers:{
         agregarProducto: (state, action) => {
             state.productosArray = [...state.productosArray, action.payload]
+        },
+
+        obtenerProducto: (state, action) => {
+            state.productosArray = action.payload
         }
     }
 })
 
-export const { agregarProducto } = productoSlice.actions;
+export const { agregarProducto, obtenerProducto } = productoSlice.actions;
 
 export default productoSlice.reducer
