@@ -9,7 +9,7 @@ export const productoSlice = createSlice({
     initialState,
     reducers:{
         agregarProducto: (state, action) => {
-            state.productosArray = state.productosArray.push(action.payload)
+            state.productosArray = [...state.productosArray, action.payload]
         }
     }
 })
